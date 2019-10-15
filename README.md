@@ -65,7 +65,7 @@ These instructions all pop the first two values from the stack and performs the 
 
 Enjamb source is UTF-8 encoded, and a "character" in Enjamb is a user-perceived character, approximated by Unicode as a [grapheme cluster](http://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries). As such, the German 'ß' is counted as a single character, even though it's encoded in two UTF-8 code units. 'g̈' — constucted from the latin 'g' and the combining diaeresis — is also a single character.
 
-The supplied implementation uses [ICU](http://site.icu-project.org/) for Unicode support, which doesn't seem to implement tailored grapheme clusters. For example, if your locale is set to Slovak, 'ch' will still be two characters instead of the one which you might expect.
+If your system locale changes grapheme cluster boundary rules (for example, if your system locale is Slovak, 'ch' will be one character instead of two) then you may get different results than intended by a program's author.
   
 ## Implementation
 
