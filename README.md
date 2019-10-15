@@ -1,8 +1,10 @@
 # Enjamb
 
-An esoteric programming language where it's not what's in your lines that matters: it's where you break them.
+An esoteric programming language where it's not what's in your lines that matters — it's where you break them.
 
 ## Outline
+
+> _enjambment (/ɛnˈdʒæmbmənt/): the running on of the thought from one line, couplet, or stanza to the next without a syntactical break._
 
 Enjamb is a stack-based language where instructions are encoded by the number of characters in each line of text. For example, a line with `14` characters in it means "take the top two values off of the stack, add them, and push the result." 
 
@@ -29,7 +31,7 @@ Blank lines are no-ops, unless they come after an instruction which takes an ope
 4. read number: Read a signed integer from stdin and pust it on to the stack.
 
 ### Control flow instructions
-Some of these instructions take a label name as an operand. Labels are named by the text on the line after the opcode, and can contain any characters you like. For example, "enjambment (/ɛnˈdʒæmbmənt/ or /ɛnˈdʒæmmənt/; from the French enjambement) is incomplete syntax at the end of a line" is a valid Enjamb label.
+Some of these instructions take a label name as an operand. Labels are named by the text on the line after the opcode, and can contain any characters you like. For example, "Exit, pursued by a bear." is a valid Enjamb label.
 
 5. label <label>: Marks this part of the code with the label opcode
 6. call <label>: Jumps to the instruction marked by the given label, and pushes the old program counter to the call stack.
@@ -57,6 +59,13 @@ These instructions all pop the first two values from the stack and performs the 
 20. dup: Duplicates the value on the top of the stack. 
 21. swap: Swaps the two values on top of the stack.
 22. pop: Pops the top value from the stack, discarding it.
+  
+ 
+## "Characters"
+
+Enjamb source is UTF-8 encoded, and a "character" in Enjamb is a user-perceived character, approximated by Unicode as a [grapheme cluster](http://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries). As such, the German 'ß' is counted as a single character, even though it's encoded in two UTF-8 code units. 'g̈' — constucted from the latin 'g' and the combining diaeresis — is also a single character.
+
+The supplied implementation uses [ICU](http://site.icu-project.org/) for Unicode support, which doesn't seem to implement tailored grapheme clusters. For example, if your locale is set to Slovak, 'ch' will still be two characters instead of the one which you might expect.
   
 ## Implementation
 
