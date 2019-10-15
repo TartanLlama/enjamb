@@ -90,7 +90,7 @@ The `--debug` flag will print out the instructions which your program encodes, w
 
 ## Examples
 
-Hello World:
+### Hello World
 
 ```
 Hello, world, a far
@@ -158,4 +158,5 @@ alone we aren't
 
 dream
 another earth
+
 ```
