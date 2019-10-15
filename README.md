@@ -88,6 +88,16 @@ enjamb <source file> [--debug]
 
 The `--debug` flag will print out the instructions which your program encodes, which is useful for debugging.
 
+## Questions Nobody Has Asked, But I'll Answer Anyway
+
+### Why?
+
+Mostly for fun, but there are some interesting artistic ideas which fall out of this design.
+
+For one, if the programmer wishes to write an Enjamb program which also functions as a poem, then they are constrained by the language. As such, Enjamb constructs show up as patterns in the poetry. Since there's very little in the way of looping support in Enjamb, poems written as Enjamb programs will show similar structures where looping behaviour is required. Similarly, I/O intensive programs will read as faster-paced than compute-intensive programs because the opcode encodings of I/O instructions are shorter than arithmetic or stack operations.
+
+Since labels are essentially free text, but must be repeated in order for jumps or function calls to occur, the writer is forced to repeat phrases and consider how they must be placed within the poem/program.
+
 ## Examples
 
 ### Hello World
