@@ -156,6 +156,6 @@ another earth
 comes,
 alone we aren't
 
-world
+dream
 another earth
 ```
