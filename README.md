@@ -160,3 +160,31 @@ dream
 another earth
 
 ```
+
+### Count from one to ten
+
+```
+Up and up and up, a
+1
+makes
+gold
+if you believe in it
+
+believe in me, count
+up
+above the clouds, 1
+voice in a
+beautiful sky —
+& we fly
+past
+
+wings clipped no more,
+summer daze count 1
+2
+3 with me, fly
+wishful
+with
+golds
+past
+everything.
+```
