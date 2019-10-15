@@ -98,6 +98,10 @@ For one, if the programmer wishes to write an Enjamb program which also function
 
 Since labels are essentially free text, but must be repeated in order for jumps or function calls to occur, the writer is forced to repeat phrases and consider how they must be placed within the poem/program.
 
+### Why are the opcodes numbered like they are?
+
+I tried the opcodes in a few different distributions while writing the sample programs. I quickly discovered that having `push` encoded as `1` forced you into a style of writing which I didn't much enjoy, so I flipped things around until I was happy with the result. Having `print character` as `1` is interesting because it forces you to at least have one single-character line in the program, but isn't quite as common as `push`. The writer can always hide it behind a function if they wish.
+
 ## Examples
 
 ### Hello World
