@@ -140,21 +140,22 @@ grass, glass shield
 inevitable, fracturing, head-
 bang, belt welt
 smash of life under
-closed eyes
+closed eye.
 
-world
-alone we aren't
+World
+sleeping, a new
 
-enough, not you nor I
+vision, we can't, yo—
 I
 can't build another
 I
 seep into soil,
 
+tumbling among dirt,
 waitwait
 another earth
 comes,
-alone we aren't
+sleeping, a new
 
 dream
 another earth
@@ -178,8 +179,7 @@ beautiful sky —
 & we fly
 past
 
-wings clipped no more,
-summer daze count 1
+summer days count 1
 2
 3 with me, fly
 wishful
@@ -188,3 +188,4 @@ golds
 past
 everything.
 ```
+
