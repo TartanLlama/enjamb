@@ -10,14 +10,13 @@ jobs:
     steps:
     - name: Update CMake
       run: sudo pip install --upgrade pip && sudo python -m pip install cmake
+    - uses: actions/checkout@v1
     - name: Get emsdk
       run: |
         git clone https://github.com/emscripten-core/emsdk.git
         cd emsdk
         ./emsdk install latest-fastcomp
         ./emsdk activate latest-fastcomp
-
-    - uses: actions/checkout@v1
     - name: Build
       run: |
         mkdir build
