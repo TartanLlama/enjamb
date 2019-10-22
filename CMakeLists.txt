@@ -3,6 +3,7 @@
 project ("enjamb")
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
+  message(Fetching ICU)
   # Building ICU for Emscripten is a *massive* pain, pull down binaries instead
   include(FetchContent)
   FetchContent_Declare(
@@ -13,6 +14,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
   FetchContent_MakeAvailable(icu-emscripten)
 
   # Make sure CMake doesn't try to pull in system installations of ICU
+  set(ICU_ROOT ${icu-emscripten_SOURCE_DIR})
   set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER)
 endif()
 
