@@ -8,14 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Update CMake
+      run: sudo apt remove cmake && pip install cmake
     - name: Get emsdk
       run: |
         git clone https://github.com/emscripten-core/emsdk.git
         cd emsdk
         ./emsdk install latest-fastcomp
         ./emsdk activate latest-fastcomp
-    - name: Update CMake
-      run: apt remove cmake && pip install cmake
+
     - uses: actions/checkout@v1
     - name: Build
       run: |
