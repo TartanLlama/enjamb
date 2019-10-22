@@ -160,3 +160,8 @@ dream
 another earth
 
 ```
+
+# License
+
+Enjamb is licensed under [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt).
+[TLN](https://github.com/MatheusAvellar/textarea-line-numbers) is distributed under the [Apache 2.0 license](https://github.com/MatheusAvellar/textarea-line-numbers/blob/master/LICENSE).

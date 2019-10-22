@@ -1,0 +1,5 @@
+if(CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
+  add_subdirectory(emscripten)
+else()
+  add_subdirectory(native)
+endif()

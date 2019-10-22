@@ -1,0 +1,30 @@
+push aaaaaaaaaaaaaa
+9 aaaaaaa
+call a
+round and round
+aa
+exit aaaaaa
+twist
+round and round
+dup aaaaaaaaaaaaaaaa
+push aaaaaaaaaaaaaa
+2a
+sub aaaaaaaaaaa
+jn aaaaaa
+end
+push aaaaaaaaaaaaaa
+1
+sub aaaaaaaaaaa
+dup aaaaaaaaaaaaaaaa
+push aaaaaaaaaaaaaa
+1
+sub aaaaaaaaaaa
+call a
+round and round
+swap aaaaaaaaaaaaaaaa
+call a
+round and round
+add aaaaaaaaaa
+label
+end
+return aaa
