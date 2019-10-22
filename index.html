@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Enjamb</title>
+  <script src="enjamb.js"></script>
+  <script src="tln.js"></script>
+  <link rel="stylesheet" type="text/css" href="tln.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300|Roboto:300&display=swap" rel="stylesheet">
+  <style type="text/css">
+    body {
+      text-align: center;
+      font-family: "Roboto Mono", monospace;
+    }
+
+    button {
+      margin: 10px;
+    }
+
+    label, input {
+      margin: 0;
+      vertical-align: middle;
+    }
+
+    #in {
+      position: relative;
+      height: 500px;
+      width: 500px;
+      margin: 15px auto;
+    }
+
+    #source {
+      background: #fef8ec;
+    }
+
+    h1, h2, h3 {
+      font-family: "Roboto", sans-serif;
+      font-weight: 300;
+    }
+  </style>
+  <script>
+    window.onload = function() {
+      TLN.append_line_numbers('source');
+    };
+    function dispatch_code() {
+      let run_code = Module.cwrap('run_code', 'string', ['string']);
+      let result = run_code(document.getElementById('source').value);
+      document.getElementById('result').value = result;
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Enjamb</h1>
+  <h2>An <a href="https://en.wikipedia.org/wiki/Esoteric_programming_language">esolang</a> where it's not what's in your lines that matters — it's where you break them.</h2>
+  <h3>By <a href="https://twitter.com/TartanLlama">TartanLlama</a>.</h3>
+  <div id="in">
+    <textarea id="source"></textarea>
+  </div>
+  <button onclick="dispatch_code()">Run</button>
+  <div id="out"><textarea id="result" readonly> </textarea></div>
+</body>
+
+</html> 
