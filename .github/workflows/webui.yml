@@ -9,7 +9,7 @@ jobs:
     
     steps:
     - name: Update CMake
-      run: sudo apt remove cmake && pip install --upgrade pip && pip install cmake
+      run: pip install --upgrade pip && python -m pip install cmake
     - name: Get emsdk
       run: |
         git clone https://github.com/emscripten-core/emsdk.git
