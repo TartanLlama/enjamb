@@ -12,8 +12,10 @@ jobs:
       run: |
         git clone https://github.com/emscripten-core/emsdk.git
         cd emsdk
-        ./emsdk install latest
-        ./emsdk activate latest
+        ./emsdk install latest-fastcomp
+        ./emsdk activate latest-fastcomp
+    - name: Update CMake
+      run: apt remove cmake && pip install cmake
     - uses: actions/checkout@v1
     - name: Build
       run: |
