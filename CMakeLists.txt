@@ -16,6 +16,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
   # Make sure CMake doesn't try to pull in system installations of ICU
   set(ICU_ROOT ${icu-emscripten_SOURCE_DIR})
   set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER)
+  set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE NEVER)
 endif()
 
 # We need the unicode and data components of ICU
