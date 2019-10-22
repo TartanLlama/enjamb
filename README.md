@@ -24,6 +24,8 @@ There are 22 instructions in Enjamb. Each opcode takes a single line of text, wh
 
 Blank lines are no-ops, unless they come after an instruction which takes an operand, in which case they form the operand (see the specific instructions for details).
 
+I based the instruction set on [Whitespace](https://en.wikipedia.org/wiki/Whitespace_%28programming_language%29) because it provides a minimal set of operations while still being useable (for some definition of "useable"). I didn't pay attention to the nuances of the language though, so don't assume that all the semantics are preserved.
+
 ### I/O instructions
 1. print character: Pop the top of the stack and print it as an ASCII character.
 2. print number: Pop the top of the stack and print it as a 32bit signed integer.
@@ -36,8 +38,8 @@ Some of these instructions take a label name as an operand. Labels are named by 
 5. label <label>: Marks this part of the code with the label opcode
 6. call <label>: Jumps to the instruction marked by the given label, and pushes the old program counter to the call stack.
 7. jump <label>: Unconditionally jumps to the instruction marked by the given label.
-8. jump if zero <label>: Jumps to the instruction marked by the given label if the value at the top of the stack is `0`.
-9. jump if neg <label>: Jumps to the instruction marked by the given label if the value at the top of the stack is negative.
+8. jump if zero <label>: Jumps to the instruction marked by the given label if the value at the top of the stack is `0`. Also pops the top of the stack.
+9. jump if neg <label>: Jumps to the instruction marked by the given label if the value at the top of the stack is negative. Also pops the top of the stack.
 10. return: Returns to the program counter at the top of the call stack.
 11. exit: Exits the program, returning the value at the top of the stack.
 
@@ -87,6 +89,24 @@ enjamb <source file> [--debug]
 ```
 
 The `--debug` flag will print out the instructions which your program encodes, which is useful for debugging.
+
+## Questions Nobody Has Asked, But I'll Answer Anyway
+
+### Why?
+
+Mostly for fun, but there are some interesting artistic ideas which fall out of this design.
+
+For one, if the programmer wishes to write an Enjamb program which also functions as a poem, then they are constrained by the language. As such, Enjamb constructs show up as patterns in the poetry. Since there's very little in the way of looping support in Enjamb, poems written as Enjamb programs will show similar structures where looping behaviour is required. Similarly, I/O intensive programs will read as faster-paced than compute-intensive programs because the opcode encodings of I/O instructions are shorter than arithmetic or stack operations.
+
+Since labels are essentially free text, but must be repeated in order for jumps or function calls to occur, the writer is forced to repeat phrases and consider how they must be placed within the poem/program.
+
+### Why are the opcodes numbered like they are?
+
+I tried the opcodes in a few different distributions while writing the sample programs. I quickly discovered that having `push` encoded as `1` forced you into a style of writing which I didn't much enjoy, so I flipped things around until I was happy with the result. Having `print character` as `1` is interesting because it forces you to at least have one single-character line in the program, but it isn't quite as common as `push`. The writer can always hide it behind a function if they wish.
+
+### What use does this have?
+
+You could use it to write a submission for [code::art](https://code-art.xyz/)!
 
 ## Examples
 
@@ -140,28 +160,57 @@ grass, glass shield
 inevitable, fracturing, head-
 bang, belt welt
 smash of life under
-closed eyes
+closed eye.
 
-world
-alone we aren't
+World
+sleeping, a new
 
-enough, not you nor I
+vision, we can't, yo—
 I
 can't build another
 I
 seep into soil,
 
+tumbling among dirt,
 waitwait
 another earth
 comes,
-alone we aren't
+sleeping, a new
 
 dream
 another earth
 
 ```
 
+### Count from one to ten
+
+```
+Up and up and up, a
+1
+makes
+gold
+if you believe in it
+
+believe in me, count
+up
+above the clouds, 1
+voice in a
+beautiful sky —
+& we fly
+past
+
+summer days count 1
+2
+3 with me, fly
+wishful
+with
+golds
+past
+everything.
+```
+
 # License
 
 Enjamb is licensed under [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt).
 [TLN](https://github.com/MatheusAvellar/textarea-line-numbers) is distributed under the [Apache 2.0 license](https://github.com/MatheusAvellar/textarea-line-numbers/blob/master/LICENSE).
+
