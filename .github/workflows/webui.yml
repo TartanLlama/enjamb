@@ -22,6 +22,11 @@ jobs:
       run: |
         mkdir build
         cd build
+        ls ../../
+        ls ../../..
+        ls ../../emsdk
+        ls ../../emsdk/fastcomp
+        ls ../../emsdk/fastcomp/emscripten/cmake/Modules/Platform/Emscripten.cmake
         cmake .. -DCMAKE_TOOLCHAIN_FILE=../../emsdk/fastcomp/emscripten/cmake/Modules/Platform/Emscripten.cmake
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v2.5.0
