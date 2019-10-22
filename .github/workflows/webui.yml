@@ -15,11 +15,14 @@ jobs:
         ./emsdk install latest
         ./emsdk activate latest
     - uses: actions/checkout@v1
-    - name: 
-      uses: JamesIves/github-pages-deploy-action@master
+    - name: Build
+      run: |
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_TOOLCHAIN_FILE=../emsdk/fastcomp/emscripten/cmake/Modules/Platform/Emscripten.cmake
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v2.5.0
       env:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BASE_BRANCH: master # The branch the action should deploy from.
-        BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: build # The folder the action should deploy.
-        BUILD_SCRIPT: mkdir build && cd build && cmake .. -DCMAKE_TOOLCHAIN_FILE=../emsdk/fastcomp/emscripten/cmake/Modules/Platform/Emscripten.cmake
+        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: ./docs
