@@ -203,8 +203,8 @@ summer days count 1
 2
 3 with me, fly
 wishful
-with
-golds
+gold
+wings
 past
 everything.
 ```
