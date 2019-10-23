@@ -22,10 +22,12 @@ jobs:
         mkdir build
         cd build
         pwd
-        cmake .. -DCMAKE_TOOLCHAIN_FILE=../emsdk/fastcomp/emscripten/cmake/Modules/Platform/Emscripten.cmake
-    - name: Deploy
+        cmake .. -DCMAKE_TOOLCHAIN_FILE=../emsdk/fastcomp/emscripten/cmake/Modules/Platform/Emscripten.cmake -DCMAKE_INSTALL_PREFIX=www
+        make
+        make install
+ - name: Deploy
       uses: peaceiris/actions-gh-pages@v2.5.0
       env:
         ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: ./build/tools/emscripten
+        PUBLISH_DIR: ./build/www
