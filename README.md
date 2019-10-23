@@ -71,16 +71,20 @@ If your system locale changes grapheme cluster boundary rules (for example, if y
   
 ## Implementation
 
-The implementation of Emjamb provided in this repository is an interpreter written in C++.
+The implementation of Emjamb provided in this repository is an interpreter written in C++. It can be built as a command line application, or as a web page. You can try it out online at [enjamb.tartanllama.xyz](https://enjamb.tartanllama.xyz/).
 
 ### Building `enjamb`
 
 _Requirements:_
-- [ICU](http://site.icu-project.org/download/), which is available on [vcpkg](https://github.com/Microsoft/vcpkg/tree/master/ports/icu).
-- CMake 3.15.
-- A C++ compiler with C++17 support.
+- Native:
+  - [ICU](http://site.icu-project.org/download/), which is available on [vcpkg](https://github.com/Microsoft/vcpkg/tree/master/ports/icu).
+  - CMake 3.15.
+  - A C++ compiler with C++17 support.
+- Web:
+  - CMake 3.15.
+  - Emscripten (tested with 1.38.47, may work with other versions).
 
-[Use CMake](https://cmake.org/runningcmake/) for building.
+[Use CMake](https://cmake.org/runningcmake/) for building. To target the web, provide the `Emscripten.cmake` toolchain file supplied with Emscripten to CMake through [CMAKE_TOOLCHAIN_FILE](https://cmake.org/cmake/help/v3.15/variable/CMAKE_TOOLCHAIN_FILE.html).
 
 ### Running `enjamb`
 
@@ -107,6 +111,9 @@ I tried the opcodes in a few different distributions while writing the sample pr
 ### What use does this have?
 
 You could use it to write a submission for [code::art](https://code-art.xyz/)!
+
+### Why are there no tests?
+What are "tests"?
 
 ## Examples
 
@@ -203,8 +210,8 @@ summer days count 1
 2
 3 with me, fly
 wishful
-with
-golds
+gold
+wings
 past
 everything.
 ```
