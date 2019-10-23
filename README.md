@@ -81,8 +81,8 @@ _Requirements:_
   - CMake 3.15.
   - A C++ compiler with C++17 support.
 - Web:
-  - CMake 3.15
-  - Emscripten (tested with 1.38.47, may work with other versions)
+  - CMake 3.15.
+  - Emscripten (tested with 1.38.47, may work with other versions).
 
 [Use CMake](https://cmake.org/runningcmake/) for building. To target the web, provide the `Emscripten.cmake` toolchain file supplied with Emscripten to CMake through [CMAKE_TOOLCHAIN_FILE](https://cmake.org/cmake/help/v3.15/variable/CMAKE_TOOLCHAIN_FILE.html).
 
@@ -111,6 +111,9 @@ I tried the opcodes in a few different distributions while writing the sample pr
 ### What use does this have?
 
 You could use it to write a submission for [code::art](https://code-art.xyz/)!
+
+### Why are there no tests?
+What are "tests"?
 
 ## Examples
 
