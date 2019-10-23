@@ -32,3 +32,25 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "TRUE")
 endif()
 
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/usr/share/enjamb" TYPE EXECUTABLE FILES "/home/runner/work/enjamb/enjamb/build/tools/emscripten/enjamb.js")
+  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/usr/share/enjamb/enjamb.js" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/usr/share/enjamb/enjamb.js")
+    if(CMAKE_INSTALL_DO_STRIP)
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/usr/share/enjamb/enjamb.js")
+    endif()
+  endif()
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/usr/share/enjamb" TYPE FILE FILES
+    "/home/runner/work/enjamb/enjamb/tools/emscripten/index.html"
+    "/home/runner/work/enjamb/enjamb/tools/emscripten/tln.css"
+    "/home/runner/work/enjamb/enjamb/tools/emscripten/tln.js"
+    )
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/usr/share/enjamb" TYPE FILE FILES "/home/runner/work/enjamb/enjamb/build/tools/emscripten/enjamb.wasm")
+endif()
+

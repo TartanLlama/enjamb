@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
-  "../../../docs/enjamb.js"
-  "../../../docs/enjamb.pdb"
   "CMakeFiles/enjamb-js.dir/entrypoint.cpp.o"
+  "enjamb.js"
+  "enjamb.pdb"
 )
 
 # Per-language clean rules from dependency scanning.
