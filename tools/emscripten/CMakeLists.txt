@@ -4,7 +4,7 @@ target_link_libraries(enjamb-js libenjamb)
 set_target_properties(enjamb-js PROPERTIES OUTPUT_NAME "enjamb")
 # We need extra memory to link ICU, and need to export cwrap so we can call C++ functions from JS
 set_target_properties(enjamb-js PROPERTIES
-                      LINK_FLAGS "-s TOTAL_MEMORY=33619968 -s EXTRA_EXPORTED_RUNTIME_METHODS='cwrap'")
+                      LINK_FLAGS "-s TOTAL_MEMORY=33619968 -s EXTRA_EXPORTED_RUNTIME_METHODS='cwrap' -s DISABLE_EXCEPTION_CATCHING=0")
 
 # Build to docs for GitHub pages
 set(EMSCRIPTEN_OUTPUT_DIR ${PROJECT_SOURCE_DIR}/docs)

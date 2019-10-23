@@ -78,32 +78,41 @@ namespace enjamb {
       }
    }
 
-   instruction generate_instruction(opcode op, std::istream& is) {
+   instruction generate_instruction(opcode op, std::istream& is, std::size_t& line_number) {
       if (has_label_operand(op)) {
+         ++line_number;
          std::string operand = "";
          std::getline(is, operand);
-         return { op, operand };
+         return { op, operand, line_number };
       }
 
       if (op == opcode::push) {
+         ++line_number;
          std::string operand = "";
          std::getline(is, operand);
          auto count = count_user_perceived_characters(operand);
-         return { op, count };
+         return { op, count, line_number };
       }
 
-      return { op };
+      return { op, std::monostate{}, line_number };
    }
 
    code read_code(std::istream& is) {
       code code;
       std::string line;
+      std::size_t line_number = 0;
       while (std::getline(is, line)) {
+         ++line_number;
          auto count = count_user_perceived_characters(line);
          //empty lines are a no-op
          if (count != 0) {
-            auto opcode = to_opcode(count);
-            code.push_back(generate_instruction(opcode, is));
+            try {
+               auto opcode = to_opcode(count);
+               code.push_back(generate_instruction(opcode, is, line_number));
+            }
+            catch (std::runtime_error const& err) {
+               throw error(err.what(), line_number);
+            }
          }
       }
 
@@ -112,7 +121,7 @@ namespace enjamb {
 
    void dump_code(code const& code, std::ostream& os) {
       for (auto&& instr : code) {
-         switch (instr.opcode) {
+         switch (instr.op) {
          case opcode::push: os << "push"; break;
          case opcode::dup: os << "dup"; break;
          case opcode::swap: os << "swap"; break;
@@ -159,7 +168,7 @@ namespace enjamb {
       std::size_t pc = 0;
 
       while (pc < code.size()) {
-         if (code[pc].opcode == opcode::label) {
+         if (code[pc].op == opcode::label) {
             labels[std::get<std::string>(code[pc].operand)] = pc;
          }
          ++pc;
@@ -171,18 +180,33 @@ namespace enjamb {
    int32_t execute_code(code const& code, std::ostream& os) {
       std::stack<int32_t> stack;
       std::stack<std::size_t> ret_stack;
-      std::array<int32_t, 4000> heap;
+      std::array<int32_t, heap_size> heap;
       std::unordered_map<std::string, std::size_t> labels = find_label_positions(code);
       std::size_t pc = 0;
 
+      auto check_stack_size = [&stack, &pc, &code](int required_size) {
+         if (stack.size() < required_size) {
+            auto err = "Not enough values on the stack: expected " + std::to_string(required_size) + ", but got " + std::to_string(stack.size());
+            throw error(err, code[pc].line_number);
+         }
+      };
+
+      auto checked_resolve_label = [&labels, &pc, &code](std::string const& label) {
+         if (!labels.count(label)) {
+            throw error("Invalid label: " + label, code[pc].line_number);
+         }
+         return labels[label];
+      };
+
       while (pc < code.size()) {
          auto const& instr = code[pc];
-         switch (instr.opcode) {
+         switch (instr.op) {
          case opcode::push: stack.push(std::get<int>(instr.operand)); break;
 
          case opcode::dup: stack.push(stack.top()); break;
 
          case opcode::swap: {
+            check_stack_size(2);
             auto old_top = stack.top();
             stack.pop();
             std::swap(old_top, stack.top());
@@ -190,9 +214,12 @@ namespace enjamb {
             break;
          }
 
-         case opcode::pop: stack.pop(); break;
-
+         case opcode::pop: {
+            check_stack_size(1);
+            stack.pop(); break;
+         }
          case opcode::add: {
+            check_stack_size(2);
             auto old_top = stack.top();
             stack.pop();
             stack.top() += old_top;
@@ -200,6 +227,7 @@ namespace enjamb {
          }
 
          case opcode::sub: {
+            check_stack_size(2);
             auto old_top = stack.top();
             stack.pop();
             stack.top() -= old_top;
@@ -207,6 +235,7 @@ namespace enjamb {
          }
 
          case opcode::mul: {
+            check_stack_size(2);
             auto old_top = stack.top();
             stack.pop();
             stack.top() *= old_top;
@@ -214,6 +243,7 @@ namespace enjamb {
          }
 
          case opcode::div: {
+            check_stack_size(2);
             auto old_top = stack.top();
             stack.pop();
             stack.top() /= old_top;
@@ -221,6 +251,7 @@ namespace enjamb {
          }
 
          case opcode::mod: {
+            check_stack_size(2);
             auto old_top = stack.top();
             stack.pop();
             stack.top() %= old_top;
@@ -228,14 +259,22 @@ namespace enjamb {
          }
 
          case opcode::store: {
+            check_stack_size(2);
             auto loc = stack.top();
+            if (loc < 0 || loc >= heap_size) {
+               throw error("Invalid heap index: " + std::to_string(loc), instr.line_number);
+            }
             stack.pop();
             heap[loc] = stack.top();
             break;
          }
 
          case opcode::load: {
+            check_stack_size(1);
             auto loc = stack.top();
+            if (loc < 0 || loc >= heap_size) {
+               throw error("Invalid heap index: " + std::to_string(loc), instr.line_number);
+            }
             stack.pop();
             stack.push(heap[loc]);
             break;
@@ -243,12 +282,12 @@ namespace enjamb {
 
          case opcode::call: {
             ret_stack.push(pc);
-            pc = labels[std::get<std::string>(instr.operand)];
+            pc = checked_resolve_label(std::get<std::string>(instr.operand));
             break;
          }
 
          case opcode::jump: {
-            pc = labels[std::get<std::string>(instr.operand)];
+            pc = checked_resolve_label(std::get<std::string>(instr.operand));
             break;
          }
 
@@ -262,13 +301,16 @@ namespace enjamb {
 
          case opcode::jn: {
             if (stack.top() < 0) {
-               pc = labels[std::get<std::string>(instr.operand)];
+               pc = checked_resolve_label(std::get<std::string>(instr.operand));
             }
             stack.pop();
             break;
          }
 
          case opcode::ret: {
+            if (ret_stack.empty()) {
+               throw error("Return stack empty", instr.line_number);
+            }
             pc = ret_stack.top();
             ret_stack.pop();
             break;
@@ -280,12 +322,14 @@ namespace enjamb {
          }
 
          case opcode::putc: {
+            check_stack_size(1);
             os << static_cast<char>(stack.top());
             stack.pop();
             break;
          }
 
          case opcode::putn: {
+            check_stack_size(1);
             os << stack.top();
             stack.pop();
             break;

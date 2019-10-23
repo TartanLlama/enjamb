@@ -3,9 +3,20 @@
 #include <variant>
 #include <vector>
 #include <iostream>
+#include <exception>
 #include <unordered_map>
 
 namespace enjamb {
+   constexpr std::size_t heap_size = 4096;
+
+   struct error : std::runtime_error {
+      error(std::string const& what, std::size_t line_number) : 
+         std::runtime_error(what), line_number(line_number) {
+
+      }
+      std::size_t line_number;
+   };
+
    enum class opcode {
       //Stack operations
       push, dup, swap, pop,
@@ -24,12 +35,13 @@ namespace enjamb {
    };
 
    struct instruction {
-      opcode opcode;
+      opcode op;
       std::variant<
          std::monostate, //most instructions have no operands
          int32_t,        //push has an int operand
          std::string     //label instructions have a string operand
       > operand;
+      std::size_t line_number;
    };
    using code = std::vector<instruction>;
 
