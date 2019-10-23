@@ -22,7 +22,7 @@ jobs:
         mkdir build
         cd build
         pwd
-        cmake .. -DCMAKE_TOOLCHAIN_FILE=../emsdk/fastcomp/emscripten/cmake/Modules/Platform/Emscripten.cmake -DCMAKE_INSTALL_PREFIX=www
+        cmake .. -DCMAKE_TOOLCHAIN_FILE=../emsdk/fastcomp/emscripten/cmake/Modules/Platform/Emscripten.cmake
         cmake --build .
         cmake --install .
  - name: Deploy
