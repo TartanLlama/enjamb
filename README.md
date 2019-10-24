@@ -26,6 +26,8 @@ Blank lines are no-ops, unless they come after an instruction which takes an ope
 
 I based the instruction set on [Whitespace](https://en.wikipedia.org/wiki/Whitespace_%28programming_language%29) because it provides a minimal set of operations while still being useable (for some definition of "useable"). I didn't pay attention to the nuances of the language though, so don't assume that all the semantics are preserved.
 
+Below are a list of the instructions along with their semantics, prepended with the number of characters required to encode that instruction. For example, `print character` could be encoded by a line with `I`, or `a`, or any other single character. `exit` could be encoded with `exit please`.
+
 ### I/O instructions
 1. print character: Pop the top of the stack and print it as an ASCII character.
 2. print number: Pop the top of the stack and print it as a 32bit signed integer.
