@@ -346,13 +346,16 @@ namespace enjamb {
             int32_t i;
             std::cin >> i;
             stack.push(i);
-            break;
+            break;//
          }
          }
 
          ++pc;
       }
 
+
+      int i = 42;
+      int j = std::move(i);
       return 0;
    }
 }
